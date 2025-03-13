@@ -1,0 +1,16 @@
+.main__weatherCard{
+    position:relative;
+}
+.main__temperature{
+    position:absolute;
+    font-family:'Cabinet Grotesk';
+    color:white;
+    font-size:36px;
+    font-weight: 700;
+    bottom: 16px;
+    left: 16px;
+}
+.main__weatherCard-img{
+    width:100%;
+    margin-bottom: 40px;
+}

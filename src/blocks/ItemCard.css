@@ -1,0 +1,23 @@
+.itemCard{
+    width:323px;
+    height:328px;
+    list-style-type: none;
+    position:relative;
+    display: flex;
+    justify-content: center;
+
+}
+.item-image{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+.item__name{
+    position:absolute;
+    top:15px;
+    margin: 0px auto;
+    background-color: white;
+    font-family:'Cabinet Grotesk';
+    font-size:20px;
+    line-height:24px;
+}

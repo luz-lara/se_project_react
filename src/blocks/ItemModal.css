@@ -1,0 +1,38 @@
+.itemModal__preview-container{
+    width:498px;
+    font-size:16px;
+    font-weight:700;
+    line-height:24px;
+    margin:auto;
+    background-color: #fff;
+    border-radius:16px;
+    position: relative;
+    border-radius: 10px;
+}
+.itemModal__preview-image{
+    width:498px;
+    height:498px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.itemModal__close-button{
+    border: none;
+    width: 20px;
+    height: 20px;
+    background-image: url("../images/close-button.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    background-color: transparent;
+    cursor: pointer;
+    left:460px;
+    top:20px;
+  }
+  .modal__preview-title{
+    margin-left:32px;
+  }
+  .modal__preview-weather{
+    margin-left:32px;
+    margin-top: 12px;
+    margin-bottom: 32px;
+  }

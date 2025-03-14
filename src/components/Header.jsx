@@ -7,7 +7,7 @@ function Header(props) {
         <>
             <header className="header">
                 <div className="header__logo-and-location-container">
-                    <img src={logo} alt="" className="header__logo" />
+                    <img src={logo} alt="wtwr logo" className="header__logo" />
                     <p className="header__date-and-location">{props.date}</p>
                 </div>
                 <div className="header__user-container">

@@ -1,5 +1,5 @@
 import sunny from "../images/clear-nightt.png"
-import {getWeatherBanner} from "../utils";
+import {getWeatherBanner} from "../utils/utils";
 
 function WeatherCard({weatherData}) {
     const condition= weatherData?.weather?.[0].main;

@@ -12,7 +12,7 @@ import "../blocks/ItemCard.css"
 import "../blocks/ItemModal.css"
 
 import Footer from "./Footer.jsx";
-import { latitude, longitude, APIkey } from '../utils.js';
+import { latitude, longitude, APIkey } from '../utils/utils.js';
 import"../blocks/Footer.css"
 const currentDate = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });
 

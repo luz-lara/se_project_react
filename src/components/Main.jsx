@@ -1,6 +1,6 @@
 import WeatherCard from "./WeatherCard"
 import ItemCard from "./ItemCard"
-import { defaultClothingItems, getWeatherCategory, currentHour, greeting } from '../utils.js';
+import { defaultClothingItems, getWeatherCategory, currentHour, greeting } from '../utils/utils.js';
 
 function Main({ weatherData, onItemClick }) {
 

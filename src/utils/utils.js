@@ -1,15 +1,15 @@
-import clearNight from "./images/clear-nightt.png"
-import sunny from "./images/sunny.png"
-import cloudyDay from "./images/cloudy.png";
-import cloudyNight from"./images/cloudy-night.png";
-import rainDay from "./images/rain.png";
-import rainNight from "./images/rain-night.png";
-import snowNight from "./images/snow-night.png";
-import snowDay from "./images/snow.png";
-import stormNight from "./images/storm-night.png";
-import stormDay from "./images/storm.png";
-import fogNight from "./images/fog-night.png";
-import fogDay from "./images/fog.png";
+import clearNight from "../images/clear-nightt.png"
+import sunny from "../images/sunny.png"
+import cloudyDay from "../images/cloudy.png";
+import cloudyNight from"../images/cloudy-night.png";
+import rainDay from "../images/rain.png";
+import rainNight from "../images/rain-night.png";
+import snowNight from "../images/snow-night.png";
+import snowDay from "../images/snow.png";
+import stormNight from "../images/storm-night.png";
+import stormDay from "../images/storm.png";
+import fogNight from "../images/fog-night.png";
+import fogDay from "../images/fog.png";
 
 export const APIkey ="3a99b729275e704daca18d1a6457b1f1";
 export const latitude=40.7128;

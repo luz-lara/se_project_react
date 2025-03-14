@@ -52,10 +52,10 @@ function App() {
   const handleItemClick = (item) => {
     setSelectedItem(item);
   }
-  const closeModal = () => {
+  const closeItemModal = () => {
     setSelectedItem(null);
   }
-  const handleOpenModal = () => {
+  const openFormModal = () => {
     setModalOpen(true);
   
   }
@@ -64,7 +64,7 @@ function App() {
   return (
     <div className="page">
       <div className="page__content">
-        <Header date={currentDate} openmodal={handleOpenModal} />
+        <Header date={currentDate} openmodal={openFormModal} />
         <main>
           <Main weatherData={weatherData} onItemClick={handleItemClick} />
         </main>
@@ -72,7 +72,7 @@ function App() {
       {isModalOpen && (<ModalWithForm title="New garment" onClose={handleCloseFormModal} />)
 
       }
-      {selectedItem && <ItemModal item={selectedItem} onClose={closeModal} weatherType={weatherData.type} />}
+      {selectedItem && <ItemModal item={selectedItem} onClose={closeItemModal} weatherType={weatherData.type} />}
       <Footer />
     </div>
   )

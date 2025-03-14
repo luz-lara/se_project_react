@@ -20,6 +20,7 @@ function App() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
+  const activeModal = isModalOpen || selectedItem;
   useEffect(() => {
     console.log("fetching weather app")
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`)
@@ -41,6 +42,10 @@ function App() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [])
+  useEffect(()=>{
+    if(!activeModal) return;
+  },[activeModal])
+  
   const handleCloseFormModal = () => {
     setModalOpen(false);
   }

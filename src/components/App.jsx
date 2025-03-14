@@ -34,7 +34,7 @@ function App() {
 
   const handleKeyDown = (e) => {
     if (e.key === "Escape") {
-      setSelectedItem(null) || setModalOpen(false);
+      closeModal() || handleCloseFormModal();
     }
   }
   useEffect(() => {
@@ -49,11 +49,10 @@ function App() {
   }
   const closeModal = () => {
     setSelectedItem(null);
-    console.log("listening");
   }
   const handleOpenModal = () => {
     setModalOpen(true);
-    console.log("being called ")
+  
   }
 
 

@@ -12,7 +12,7 @@ import "../blocks/ItemCard.css"
 import "../blocks/ItemModal.css"
 import Footer from "./Footer.jsx";
 import { latitude, longitude, APIkey } from '../utils/utils.js';
-import"../blocks/Footer.css"
+import "../blocks/Footer.css"
 import { fetchWeatherData } from '../api.js';
 const currentDate = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });
 
@@ -55,10 +55,10 @@ function App() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [])
-  useEffect(()=>{
-    if(!activeModal) return;
-  },[activeModal])
-  
+  useEffect(() => {
+    if (!activeModal) return;
+  }, [activeModal])
+
   const handleCloseFormModal = () => {
     setModalOpen(false);
   }
@@ -70,7 +70,7 @@ function App() {
   }
   const openFormModal = () => {
     setModalOpen(true);
-  
+
   }
 
 

@@ -10,10 +10,10 @@ import "../blocks/Main.css"
 import ItemModal from './ItemModal.jsx';
 import "../blocks/ItemCard.css"
 import "../blocks/ItemModal.css"
-
 import Footer from "./Footer.jsx";
 import { latitude, longitude, APIkey } from '../utils/utils.js';
 import"../blocks/Footer.css"
+import { fetchWeatherData } from '../api.js';
 const currentDate = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });
 
 function App() {
@@ -21,7 +21,8 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
   const activeModal = isModalOpen || selectedItem;
-  useEffect(() => {
+
+  /*useEffect(() => {
     console.log("fetching weather app")
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`)
       .then(response => response.json())
@@ -30,7 +31,19 @@ function App() {
         setWeatherData(data);
       })
       .catch(error => console.error("Error:", error))
+  }, []); */
+  useEffect(() => {
+    async function getWeather() {
+      const data = await fetchWeatherData(latitude, longitude);
+      if (data) {
+        setWeatherData(data);
+      }
+    }
+    getWeather();
   }, []);
+
+
+
 
 
   const handleKeyDown = (e) => {

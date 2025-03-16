@@ -1,4 +1,4 @@
-export default function ModalWithForm({ title, submitButton, children, onClose, buttonName, isValid }) {
+export default function ModalWithForm({ title, submitButton, children, onClose, buttonText, isValid }) {
 
 
     return (
@@ -10,7 +10,7 @@ export default function ModalWithForm({ title, submitButton, children, onClose, 
                     {children}
 
                     <button className="modal__form-bbtn"
-                        type="submit" onClick={submitButton} disabled={!isValid} style={{ opacity: !isValid ? 0.5 : 1 }}>{buttonName}</button>
+                        type="submit" onClick={submitButton} disabled={!isValid} style={{ opacity: !isValid ? 0.5 : 1 }}>{buttonText}</button>
                 </form>
             </div>
         </div>

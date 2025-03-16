@@ -129,7 +129,7 @@ function App() {
         </main>
       </div>
       {isModalOpen && (
-        <ModalWithForm title="New garment" buttonName="Add garment" onClose={handleCloseFormModal} submitButton={handleGarmentFormSubmit} isValid={isFormValid}>
+        <ModalWithForm title="New garment" buttonText="Add garment" onClose={handleCloseFormModal} submitButton={handleGarmentFormSubmit} isValid={isFormValid}>
           <div className="modal__label_nd_error">
             <label className="modal__input-title">Name</label>
             <p style={{ color: "red", margin: 0 }}> {nameErrorMessage}</p>

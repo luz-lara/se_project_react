@@ -16,19 +16,7 @@ export const APIkey = "3a99b729275e704daca18d1a6457b1f1";
 export const latitude = 40.7128;
 export const longitude = -74.0060;
 
-export const handleChange = (e) => {
-  const newName = e.target.value
-  setName(newName);
-  if (newName.trim() !== "") {
-      setisNameValid(true)
-      setNameErrorMessage("")
-      setIsError(false)
-  } else {
-      setisNameValid(false);
-      setNameErrorMessage(" *Please enter garment name");
-      setIsError(true);
-  }
-}
+
 
 export const getWeatherCategory = (temp) => {
   if (temp >= 86) {
@@ -50,21 +38,6 @@ export const getWeatherBanner = (condition, isNight) => {
     return isNight ? clearNight : sunny;
   }
 }
-
-
-
-
-
-export const handleKeyDown = (e) => {
-if (e.key === "Escape") {
-  closeModal() || handleCloseFormModal();
-}
-}
-
-
-
-
-
 export const currentHour = new Date().getHours();
 export const greeting = currentHour < 12 ? `Good Morning Terrence today is` : currentHour < 18 ? "Good afternoon Terrence today is" : "Good evening Terrence tonight is";
 

@@ -31,6 +31,13 @@ function App() {
   const isFormValid = name.trim() !== "" && Boolean(selectedValue) && urlValid === true;
   const [nameErrorMessage, setNameErrorMessage] = useState('')
   const [urlTouched, setIsUrlTouched] = useState(false);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") {
+      closeItemModal() || handleCloseFormModal();
+    }
+  }
+
   const handleChange = (e) => {
     const newName = e.target.value
     setName(newName);
@@ -73,12 +80,12 @@ function App() {
   const handleGarmentFormSubmit = (e) => {
     e.preventDefault()
     if (!isFormValid) {
-        return;
+      return;
     }
 
     onClose();
     console.log("form succesfully completed")
-}
+  }
   useEffect(() => {
     async function getWeather() {
       const data = await fetchWeatherData(latitude, longitude);

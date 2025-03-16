@@ -19,3 +19,16 @@ export const fetchWeatherData = async () =>{
   }
    
 }
+
+
+
+
+
+
+
+
+
+const handleRadioChange = (e) => {
+  setSelectedValue(e.target.value);
+
+};

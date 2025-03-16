@@ -16,7 +16,19 @@ export const APIkey = "3a99b729275e704daca18d1a6457b1f1";
 export const latitude = 40.7128;
 export const longitude = -74.0060;
 
-
+export const handleChange = (e) => {
+  const newName = e.target.value
+  setName(newName);
+  if (newName.trim() !== "") {
+      setisNameValid(true)
+      setNameErrorMessage("")
+      setIsError(false)
+  } else {
+      setisNameValid(false);
+      setNameErrorMessage(" *Please enter garment name");
+      setIsError(true);
+  }
+}
 
 export const getWeatherCategory = (temp) => {
   if (temp >= 86) {
@@ -39,6 +51,15 @@ export const getWeatherBanner = (condition, isNight) => {
   }
 }
 
+
+
+
+
+export const handleKeyDown = (e) => {
+if (e.key === "Escape") {
+  closeModal() || handleCloseFormModal();
+}
+}
 
 
 
@@ -154,3 +175,8 @@ export const defaultClothingItems = [
     link: "https://media.istockphoto.com/id/1060566234/photo/warm-winter-hat.jpg?s=2048x2048&w=is&k=20&c=m09JFi1NzQ_pbgfrmxZJY-cEZzDBkY-OvT8lj5LoPz8=",
   },
 ]
+
+export const handleRadioChange = (e) => {
+  setSelectedValue(e.target.value);
+
+};

@@ -11,7 +11,7 @@ import ItemModal from './ItemModal.jsx';
 import "../blocks/ItemCard.css"
 import "../blocks/ItemModal.css"
 import Footer from "./Footer.jsx";
-import { latitude, longitude, handleKeyDown } from '../utils/utils.js';
+import { latitude, longitude} from '../utils/utils.js';
 import "../blocks/Footer.css"
 import { fetchWeatherData } from '../api.js';
 const currentDate = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });

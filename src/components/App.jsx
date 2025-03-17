@@ -88,19 +88,30 @@ function App() {
   }
   useEffect(() => {
     async function getWeather() {
-      const data = await fetchWeatherData(latitude, longitude);
-      if (data) {
-        setWeatherData(data);
+      try {
+        const data = await fetchWeatherData(latitude, longitude);
+        if (data) {
+          setWeatherData(data);
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
     getWeather();
   }, []);
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown)
-  }, [])
+    if (!activeModal) return;
 
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        closeItemModal() || handleCloseFormModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [activeModal]); 
 
 
   const handleCloseFormModal = () => {
@@ -133,10 +144,11 @@ function App() {
       {isModalOpen && (
         <ModalWithForm title="New garment" buttonText="Add garment" onClose={handleCloseFormModal} submitButton={handleGarmentFormSubmit} isValid={isFormValid} isModalOpen={true}>
           <div className="modal__label_nd_error">
-            <label className="modal__input-title">Name</label>
+            <label className="modal__input-title" htmlFor='name'>Name</label>
             <p style={{ color: "red", margin: 0 }}> {nameErrorMessage}</p>
           </div>
           <input
+            id="name"
             value={name}
             type="text"
             onChange={handleChange}
@@ -147,6 +159,7 @@ function App() {
             <label htmlFor="url" className="modal__input-title">Image URL </label>
             {!urlValid && urlTouched && <p style={{ color: "red", margin: 0 }}> *Invalid URL</p>}</div>
           <input
+            id="url"
             value={url}
             type="url"
             onChange={handleUrlChange}

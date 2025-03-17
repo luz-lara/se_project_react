@@ -1,20 +1,23 @@
-import { useEffect, useState } from 'react'
-import Header from "./Header"
-import '../blocks/Header.css'
-import '../blocks/App.css'
-import ModalWithForm from './ModalWithForm';
-import "../blocks/ModalWithForm.css"
-import Main from "./Main.jsx"
-import "../blocks/WeatherCard.css"
-import "../blocks/Main.css"
-import ItemModal from './ItemModal.jsx';
-import "../blocks/ItemCard.css"
-import "../blocks/ItemModal.css"
+import { useEffect, useState } from "react";
+import Header from "./Header";
+import "../blocks/Header.css";
+import "../blocks/App.css";
+import ModalWithForm from "./ModalWithForm";
+import "../blocks/ModalWithForm.css";
+import Main from "./Main.jsx";
+import "../blocks/WeatherCard.css";
+import "../blocks/Main.css";
+import ItemModal from "./ItemModal.jsx";
+import "../blocks/ItemCard.css";
+import "../blocks/ItemModal.css";
 import Footer from "./Footer.jsx";
-import { latitude, longitude } from '../utils/utils.js';
-import "../blocks/Footer.css"
-import { fetchWeatherData } from '../api.js';
-const currentDate = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });
+import { latitude, longitude } from "../utils/utils.js";
+import "../blocks/Footer.css";
+import { fetchWeatherData } from "../api.js";
+const currentDate = new Date().toLocaleString("default", {
+  month: "long",
+  day: "numeric",
+});
 
 function App() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -23,39 +26,40 @@ function App() {
   const activeModal = isModalOpen || selectedItem;
   const [name, setName] = useState("");
   const [isNameValid, setisNameValid] = useState();
-  const [isError, setIsError] = useState()
+  const [isError, setIsError] = useState();
   const [url, setUrl] = useState("");
   const [urlValid, setUrlValid] = useState("");
   const [selectedValue, setSelectedValue] = useState();
   const [radioError, setRadioError] = useState("");
-  const isFormValid = name.trim() !== "" && Boolean(selectedValue) && urlValid === true;
-  const [nameErrorMessage, setNameErrorMessage] = useState('')
+  const isFormValid =
+    name.trim() !== "" && Boolean(selectedValue) && urlValid === true;
+  const [nameErrorMessage, setNameErrorMessage] = useState("");
   const [urlTouched, setIsUrlTouched] = useState(false);
 
   const handleKeyDown = (e) => {
     if (e.key === "Escape") {
       closeItemModal() || handleCloseFormModal();
     }
-  }
+  };
 
   const handleChange = (e) => {
-    const newName = e.target.value
+    const newName = e.target.value;
     setName(newName);
     if (newName.trim() !== "") {
-      setisNameValid(true)
-      setNameErrorMessage("")
-      setIsError(false)
+      setisNameValid(true);
+      setNameErrorMessage("");
+      setIsError(false);
     } else {
       setisNameValid(false);
       setNameErrorMessage(" *Please enter garment name");
       setIsError(true);
     }
-  }
+  };
   const handleUrlChange = (event) => {
     const inputUrl = event.target.value;
     setUrl(inputUrl);
-    validateUrl(inputUrl)
-    setIsUrlTouched(true)
+    validateUrl(inputUrl);
+    setIsUrlTouched(true);
     setIsError(false);
   };
   const validateUrl = (input) => {
@@ -65,27 +69,24 @@ function App() {
     } catch (error) {
       return setUrlValid(false);
     }
-
   };
   const handleUrlBlur = () => {
-    validateUrl(url)
+    validateUrl(url);
     setIsUrlTouched(true);
-
-  }
+  };
 
   const handleRadioChange = (e) => {
     setSelectedValue(e.target.value);
-
   };
   const handleGarmentFormSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!isFormValid) {
       return;
     }
 
     onClose();
-    console.log("form succesfully completed")
-  }
+    console.log("form succesfully completed");
+  };
   useEffect(() => {
     async function getWeather() {
       try {
@@ -111,26 +112,21 @@ function App() {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [activeModal]); 
-
+  }, [activeModal]);
 
   const handleCloseFormModal = () => {
     setModalOpen(false);
-  }
+  };
   const handleItemClick = (item) => {
-  
     setSelectedItem(item);
-
-  }
+  };
 
   const closeItemModal = () => {
     setSelectedItem(null);
-  }
+  };
   const openFormModal = () => {
     setModalOpen(true);
-
-  }
-
+  };
 
   return (
     <div className="page">
@@ -140,11 +136,26 @@ function App() {
           <Main weatherData={weatherData} onItemClick={handleItemClick} />
         </main>
       </div>
-      {selectedItem && <ItemModal item={selectedItem} onClose={closeItemModal} weatherType={weatherData.type} />}
+      {selectedItem && (
+        <ItemModal
+          item={selectedItem}
+          onClose={closeItemModal}
+          weatherType={weatherData.type}
+        />
+      )}
       {isModalOpen && (
-        <ModalWithForm title="New garment" buttonText="Add garment" onClose={handleCloseFormModal} submitButton={handleGarmentFormSubmit} isValid={isFormValid} isModalOpen={true}>
+        <ModalWithForm
+          title="New garment"
+          buttonText="Add garment"
+          onClose={handleCloseFormModal}
+          submitButton={handleGarmentFormSubmit}
+          isValid={isFormValid}
+          isModalOpen={true}
+        >
           <div className="modal__label_nd_error">
-            <label className="modal__input-title" htmlFor='name'>Name</label>
+            <label className="modal__input-title" htmlFor="name">
+              Name
+            </label>
             <p style={{ color: "red", margin: 0 }}> {nameErrorMessage}</p>
           </div>
           <input
@@ -153,11 +164,16 @@ function App() {
             type="text"
             onChange={handleChange}
             placeholder="Enter Name"
-            className='modal__input'
+            className="modal__input"
           />
           <div className="modal__label_nd_error">
-            <label htmlFor="url" className="modal__input-title">Image URL </label>
-            {!urlValid && urlTouched && <p style={{ color: "red", margin: 0 }}> *Invalid URL</p>}</div>
+            <label htmlFor="url" className="modal__input-title">
+              Image URL{" "}
+            </label>
+            {!urlValid && urlTouched && (
+              <p style={{ color: "red", margin: 0 }}> *Invalid URL</p>
+            )}
+          </div>
           <input
             id="url"
             value={url}
@@ -165,10 +181,11 @@ function App() {
             onChange={handleUrlChange}
             placeholder="Enter Image URL"
             onBlur={handleUrlBlur}
-            className='modal__input'
+            className="modal__input"
           />
           <div className="radio">
-            <p className="modal__input-title">Select weather type:</p> {radioError && <p>Please select weather option</p>}
+            <p className="modal__input-title">Select weather type:</p>{" "}
+            {radioError && <p>Please select weather option</p>}
             <div>
               <label style={{ opacity: selectedValue === "hot" ? 1 : 0.5 }}>
                 <input
@@ -177,43 +194,50 @@ function App() {
                   value="hot"
                   checked={selectedValue === "hot"}
                   onChange={handleRadioChange}
-                  style={{ accentColor: selectedValue === "hot" ? "black" : '' }}
+                  style={{
+                    accentColor: selectedValue === "hot" ? "black" : "",
+                  }}
                 />
-                Hot</label>
+                Hot
+              </label>
             </div>
             <div>
-              <label style={{ opacity: selectedValue === "warm" ? 1 : 0.5 }} >
+              <label style={{ opacity: selectedValue === "warm" ? 1 : 0.5 }}>
                 <input
                   type="radio"
                   name="weather"
                   value="warm"
                   checked={selectedValue === "warm"}
                   onChange={handleRadioChange}
-                  style={{ accentColor: selectedValue === "warm" ? "black" : '' }}
+                  style={{
+                    accentColor: selectedValue === "warm" ? "black" : "",
+                  }}
                 />
-                Warm</label>
+                Warm
+              </label>
             </div>
             <div>
-              <label style={{ opacity: selectedValue === "cold" ? 1 : 0.5 }} >
+              <label style={{ opacity: selectedValue === "cold" ? 1 : 0.5 }}>
                 <input
                   type="radio"
                   name="weather"
                   value="cold"
                   checked={selectedValue === "cold"}
                   onChange={handleRadioChange}
-                  style={{ accentColor: selectedValue === "cold" ? "black" : '' }}
-
+                  style={{
+                    accentColor: selectedValue === "cold" ? "black" : "",
+                  }}
                 />
-                Cold</label>
+                Cold
+              </label>
             </div>
           </div>
         </ModalWithForm>
-
       )}
-      
+
       <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

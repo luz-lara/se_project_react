@@ -12,6 +12,7 @@
     flex-direction: column;
     box-sizing: border-box;
     align-items: center;
+    
   }
   .modal__container {
     margin: auto;

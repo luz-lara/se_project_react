@@ -1,8 +1,8 @@
-export default function ModalWithForm({ title, submitButton, children, onClose, buttonText, isValid }) {
+export default function ModalWithForm({ title, submitButton, children, onClose, buttonText, isValid,isModalOpen}) {
 
 
     return (
-        <div className="modal modal__overlay" onClick={(e) => e.target.classList.contains('modal') && onClose()}>
+        <div className={`modal__overlay ${isModalOpen ? "modal__overlay--open" : ""}`} onClick={(e) => e.target.classList.contains('modal__overlay--open') && onClose()}>
             <div className="modal modal__container">
                 <button className="modal__close-button" onClick={onClose}></button>
                 <p className="modal__heading">{title}</p>

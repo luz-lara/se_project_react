@@ -5,3 +5,8 @@
     font-weight:700;
     margin: 0;
 }
+.modal__overlay--open {
+    opacity: 1;
+    visibility: visible;
+    background: rgba(0, 0, 0, 0.3);
+  }

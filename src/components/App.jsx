@@ -11,7 +11,7 @@ import ItemModal from './ItemModal.jsx';
 import "../blocks/ItemCard.css"
 import "../blocks/ItemModal.css"
 import Footer from "./Footer.jsx";
-import { latitude, longitude} from '../utils/utils.js';
+import { latitude, longitude } from '../utils/utils.js';
 import "../blocks/Footer.css"
 import { fetchWeatherData } from '../api.js';
 const currentDate = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });
@@ -101,16 +101,17 @@ function App() {
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [])
 
-  useEffect(() => {
-    if (!activeModal) return;
-  }, [activeModal])
+
 
   const handleCloseFormModal = () => {
     setModalOpen(false);
   }
   const handleItemClick = (item) => {
+  
     setSelectedItem(item);
+
   }
+
   const closeItemModal = () => {
     setSelectedItem(null);
   }
@@ -128,8 +129,9 @@ function App() {
           <Main weatherData={weatherData} onItemClick={handleItemClick} />
         </main>
       </div>
+      {selectedItem && <ItemModal item={selectedItem} onClose={closeItemModal} weatherType={weatherData.type} />}
       {isModalOpen && (
-        <ModalWithForm title="New garment" buttonText="Add garment" onClose={handleCloseFormModal} submitButton={handleGarmentFormSubmit} isValid={isFormValid}>
+        <ModalWithForm title="New garment" buttonText="Add garment" onClose={handleCloseFormModal} submitButton={handleGarmentFormSubmit} isValid={isFormValid} isModalOpen={true}>
           <div className="modal__label_nd_error">
             <label className="modal__input-title">Name</label>
             <p style={{ color: "red", margin: 0 }}> {nameErrorMessage}</p>
@@ -195,7 +197,7 @@ function App() {
         </ModalWithForm>
 
       )}
-      {selectedItem && <ItemModal item={selectedItem} onClose={closeItemModal} weatherType={weatherData.type} />}
+      
       <Footer />
     </div>
   )

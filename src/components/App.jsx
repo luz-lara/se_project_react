@@ -10,7 +10,7 @@ import "../blocks/Main.css";
 import ItemModal from "./ItemModal.jsx";
 import "../blocks/ItemCard.css";
 import "../blocks/ItemModal.css";
-import"../blocks/Switch.css";
+import "../blocks/Switch.css";
 import Footer from "./Footer.jsx";
 import { latitude, longitude } from "../utils/utils.js";
 import "../blocks/Footer.css";
@@ -19,6 +19,7 @@ const currentDate = new Date().toLocaleString("default", {
   month: "long",
   day: "numeric",
 });
+import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext.jsx";
 
 function App() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -36,13 +37,17 @@ function App() {
     name.trim() !== "" && Boolean(selectedValue) && urlValid === true;
   const [nameErrorMessage, setNameErrorMessage] = useState("");
   const [urlTouched, setIsUrlTouched] = useState(false);
-
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const handleKeyDown = (e) => {
     if (e.key === "Escape") {
       closeItemModal() || handleCloseFormModal();
     }
   };
-
+const handleToggleSwitchChange=()=>{
+  setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F")
+  console.log("listening to switch")
+}
+console.log(currentTemperatureUnit);
   const handleChange = (e) => {
     const newName = e.target.value;
     setName(newName);
@@ -130,12 +135,16 @@ function App() {
   };
 
   return (
+    <CurrentTemperatureUnitContext.Provider
+    value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+  >
     <div className="page">
       <div className="page__content">
         <Header date={currentDate} openmodal={openFormModal} />
         <main>
           <Main weatherData={weatherData} onItemClick={handleItemClick} />
         </main>
+       
       </div>
       {selectedItem && (
         <ItemModal
@@ -238,6 +247,7 @@ function App() {
 
       <Footer />
     </div>
+    </CurrentTemperatureUnitContext.Provider>
   );
 }
 

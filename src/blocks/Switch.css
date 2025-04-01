@@ -1,0 +1,52 @@
+
+
+.react-switch-checkbox {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+    margin-right:15px;
+  }
+  
+  .toogle-switch {
+    width: 56px;
+    height: 28px;
+    border:2px solid black;
+    border-radius:20px;
+    cursor:pointer;
+    overflow:hidden;
+    position:relative;
+  }
+  .toogle-switch-checkbox{
+    opacity:0;
+  }
+  .toogle-switch-circle{
+    background-color: #000;
+    width:28px;
+    height:28px;
+    position:absolute;
+    border-radius: 50%;
+    left:0;
+    transition:all 1s;
+  }
+  .toogle-unit-f{
+    left:9px;
+
+  }
+  .toogle-unit-c{
+    right:9px;
+
+  }
+  .toogle-switch-text{
+    color:grey;
+    position:absolute;
+    top:5px;
+    font-size: 14px;
+    font-family:'Cabinet Grotesk';
+    font-weight: 700px;
+  }
+  .toogle-switch-checkbox:checked ~ .toogle-switch-circle{
+    left:auto;
+    right:0;
+    
+  }
+  

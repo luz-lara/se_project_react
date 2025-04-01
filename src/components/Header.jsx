@@ -1,5 +1,6 @@
 import logo from "../images/Logo.svg";
 import avatar from "../images/avatar.svg";
+import ToogleSwitch from "./ToogleSwitch";
 
 function Header(props) {
   return (
@@ -9,6 +10,7 @@ function Header(props) {
         <p className="header__date-and-location">{props.date}</p>
       </div>
       <div className="header__user-container">
+        <ToogleSwitch />
         <button className="header__add-clothes-bttn" onClick={props.openmodal}>
           + Add clothes
         </button>

@@ -10,6 +10,7 @@ import "../blocks/Main.css";
 import ItemModal from "./ItemModal.jsx";
 import "../blocks/ItemCard.css";
 import "../blocks/ItemModal.css";
+import"../blocks/Switch.css";
 import Footer from "./Footer.jsx";
 import { latitude, longitude } from "../utils/utils.js";
 import "../blocks/Footer.css";

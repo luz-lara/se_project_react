@@ -1,19 +1,23 @@
 import WeatherCard from "./WeatherCard";
 import ItemCard from "./ItemCard";
+import { useContext } from "react";
 import {
   defaultClothingItems,
   getWeatherCategory,
   currentHour,
   greeting,
 } from "../utils/utils.js";
+import currentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext";
 
 function Main({ weatherData, onItemClick }) {
+  const {currentTemperatureUnit}=useContext(currentTemperatureUnitContext);
+  const celcius = `${Math.round(((weatherData?.main.temp - 32) * 5) / 9)}`;
+  const farenheight=`${Math.round(weatherData?.main.temp)}`;
   return (
     <main>
       <WeatherCard weatherData={weatherData} />
       <p className="main__temperature-summary">
-        {greeting} {Math.round(weatherData?.main?.feels_like)} &#8457; and feels
-        like {Math.round(weatherData?.main.temp)}&#8457; / You may want to wear:
+        {greeting} {currentTemperatureUnit === "F" ? farenheight  : celcius } / You may want to wear:
       </p>
       {
         <ul className="cards">

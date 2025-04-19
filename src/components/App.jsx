@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import "../blocks/Header.css";
 import "../blocks/App.css";
@@ -19,6 +20,7 @@ const currentDate = new Date().toLocaleString("default", {
   month: "long",
   day: "numeric",
 });
+import Profile from "./Profile.jsx";
 import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext.jsx";
 
 function App() {
@@ -43,11 +45,11 @@ function App() {
       closeItemModal() || handleCloseFormModal();
     }
   };
-const handleToggleSwitchChange=()=>{
-  setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F")
-  console.log("listening to switch")
-}
-console.log(currentTemperatureUnit);
+  const handleToggleSwitchChange = () => {
+    setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
+    console.log("listening to switch");
+  };
+  console.log(currentTemperatureUnit);
   const handleChange = (e) => {
     const newName = e.target.value;
     setName(newName);
@@ -136,117 +138,125 @@ console.log(currentTemperatureUnit);
 
   return (
     <CurrentTemperatureUnitContext.Provider
-    value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-  >
-    <div className="page">
-      <div className="page__content">
-        <Header date={currentDate} openmodal={openFormModal} />
-        <main>
-          <Main weatherData={weatherData} onItemClick={handleItemClick} />
-        </main>
-       
-      </div>
-      {selectedItem && (
-        <ItemModal
-          item={selectedItem}
-          onClose={closeItemModal}
-          weatherType={weatherData.type}
-        />
-      )}
-      {isModalOpen && (
-        <ModalWithForm
-          title="New garment"
-          buttonText="Add garment"
-          onClose={handleCloseFormModal}
-          submitButton={handleGarmentFormSubmit}
-          isValid={isFormValid}
-          isModalOpen={true}
-        >
-          <div className="modal__label_nd_error">
-            <label className="modal__input-title" htmlFor="name">
-              Name
-            </label>
-            <p style={{ color: "red", margin: 0 }}> {nameErrorMessage}</p>
-          </div>
-          <input
-            id="name"
-            value={name}
-            type="text"
-            onChange={handleChange}
-            placeholder="Enter Name"
-            className="modal__input"
-          />
-          <div className="modal__label_nd_error">
-            <label htmlFor="url" className="modal__input-title">
-              Image URL{" "}
-            </label>
-            {!urlValid && urlTouched && (
-              <p style={{ color: "red", margin: 0 }}> *Invalid URL</p>
-            )}
-          </div>
-          <input
-            id="url"
-            value={url}
-            type="url"
-            onChange={handleUrlChange}
-            placeholder="Enter Image URL"
-            onBlur={handleUrlBlur}
-            className="modal__input"
-          />
-          <div className="radio">
-            <p className="modal__input-title">Select weather type:</p>{" "}
-            {radioError && <p>Please select weather option</p>}
-            <div>
-              <label style={{ opacity: selectedValue === "hot" ? 1 : 0.5 }}>
-                <input
-                  type="radio"
-                  name="weather"
-                  value="hot"
-                  checked={selectedValue === "hot"}
-                  onChange={handleRadioChange}
-                  style={{
-                    accentColor: selectedValue === "hot" ? "black" : "",
-                  }}
-                />
-                Hot
-              </label>
-            </div>
-            <div>
-              <label style={{ opacity: selectedValue === "warm" ? 1 : 0.5 }}>
-                <input
-                  type="radio"
-                  name="weather"
-                  value="warm"
-                  checked={selectedValue === "warm"}
-                  onChange={handleRadioChange}
-                  style={{
-                    accentColor: selectedValue === "warm" ? "black" : "",
-                  }}
-                />
-                Warm
-              </label>
-            </div>
-            <div>
-              <label style={{ opacity: selectedValue === "cold" ? 1 : 0.5 }}>
-                <input
-                  type="radio"
-                  name="weather"
-                  value="cold"
-                  checked={selectedValue === "cold"}
-                  onChange={handleRadioChange}
-                  style={{
-                    accentColor: selectedValue === "cold" ? "black" : "",
-                  }}
-                />
-                Cold
-              </label>
-            </div>
-          </div>
-        </ModalWithForm>
-      )}
+      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+    >
+      {" "}
+      <div className="page">
+        <div className="page__content">
+          <Header date={currentDate} openmodal={openFormModal} />
+          <main>
+            <Main weatherData={weatherData} onItemClick={handleItemClick} />
+          </main>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
 
-      <Footer />
-    </div>
+          <main>
+            <Main weatherData={weatherData} onItemClick={handleItemClick} />
+          </main>
+        </div>
+        {selectedItem && (
+          <ItemModal
+            item={selectedItem}
+            onClose={closeItemModal}
+            weatherType={weatherData.type}
+          />
+        )}
+        {isModalOpen && (
+          <ModalWithForm
+            title="New garment"
+            buttonText="Add garment"
+            onClose={handleCloseFormModal}
+            submitButton={handleGarmentFormSubmit}
+            isValid={isFormValid}
+            isModalOpen={true}
+          >
+            <div className="modal__label_nd_error">
+              <label className="modal__input-title" htmlFor="name">
+                Name
+              </label>
+              <p style={{ color: "red", margin: 0 }}> {nameErrorMessage}</p>
+            </div>
+            <input
+              id="name"
+              value={name}
+              type="text"
+              onChange={handleChange}
+              placeholder="Enter Name"
+              className="modal__input"
+            />
+            <div className="modal__label_nd_error">
+              <label htmlFor="url" className="modal__input-title">
+                Image URL{" "}
+              </label>
+              {!urlValid && urlTouched && (
+                <p style={{ color: "red", margin: 0 }}> *Invalid URL</p>
+              )}
+            </div>
+            <input
+              id="url"
+              value={url}
+              type="url"
+              onChange={handleUrlChange}
+              placeholder="Enter Image URL"
+              onBlur={handleUrlBlur}
+              className="modal__input"
+            />
+            <div className="radio">
+              <p className="modal__input-title">Select weather type:</p>{" "}
+              {radioError && <p>Please select weather option</p>}
+              <div>
+                <label style={{ opacity: selectedValue === "hot" ? 1 : 0.5 }}>
+                  <input
+                    type="radio"
+                    name="weather"
+                    value="hot"
+                    checked={selectedValue === "hot"}
+                    onChange={handleRadioChange}
+                    style={{
+                      accentColor: selectedValue === "hot" ? "black" : "",
+                    }}
+                  />
+                  Hot
+                </label>
+              </div>
+              <div>
+                <label style={{ opacity: selectedValue === "warm" ? 1 : 0.5 }}>
+                  <input
+                    type="radio"
+                    name="weather"
+                    value="warm"
+                    checked={selectedValue === "warm"}
+                    onChange={handleRadioChange}
+                    style={{
+                      accentColor: selectedValue === "warm" ? "black" : "",
+                    }}
+                  />
+                  Warm
+                </label>
+              </div>
+              <div>
+                <label style={{ opacity: selectedValue === "cold" ? 1 : 0.5 }}>
+                  <input
+                    type="radio"
+                    name="weather"
+                    value="cold"
+                    checked={selectedValue === "cold"}
+                    onChange={handleRadioChange}
+                    style={{
+                      accentColor: selectedValue === "cold" ? "black" : "",
+                    }}
+                  />
+                  Cold
+                </label>
+              </div>
+            </div>
+          </ModalWithForm>
+        )}
+
+        <Footer />
+      </div>
     </CurrentTemperatureUnitContext.Provider>
   );
 }

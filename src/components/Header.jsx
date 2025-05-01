@@ -17,7 +17,9 @@ function Header(props) {
         <button className="header__add-clothes-bttn" onClick={props.openmodal}>
           + Add clothes
         </button>
+        <Link to="./profile" className="no-underline">
         <p className="header__username">Terrence Tegene</p>
+        </Link>
         <img src={avatar} alt="user avatar" className="header__avatar" />
       </div>
     </header>

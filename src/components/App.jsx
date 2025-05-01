@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import "../blocks/Header.css";
 import "../blocks/App.css";
@@ -8,6 +7,7 @@ import "../blocks/ModalWithForm.css";
 import Main from "./Main.jsx";
 import "../blocks/WeatherCard.css";
 import "../blocks/Main.css";
+import "../blocks/Profile.css";
 import ItemModal from "./ItemModal.jsx";
 import "../blocks/ItemCard.css";
 import "../blocks/ItemModal.css";
@@ -16,11 +16,12 @@ import Footer from "./Footer.jsx";
 import { latitude, longitude } from "../utils/utils.js";
 import "../blocks/Footer.css";
 import { fetchWeatherData } from "../api.js";
+import { Routes, Route } from 'react-router-dom'; 
 const currentDate = new Date().toLocaleString("default", {
   month: "long",
   day: "numeric",
 });
-import Profile from "./Profile.jsx";
+import Profile from "./Profile";
 import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext.jsx";
 
 function App() {
@@ -140,20 +141,16 @@ function App() {
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
     >
-      {" "}
+
       <div className="page">
         <div className="page__content">
           <Header date={currentDate} openmodal={openFormModal} />
           <main>
-            <Main weatherData={weatherData} onItemClick={handleItemClick} />
-          </main>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-
-          <main>
-            <Main weatherData={weatherData} onItemClick={handleItemClick} />
+        <Routes>
+          <Route path="/" element={<Main weatherData={weatherData} onItemClick={handleItemClick} />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<div>Page not found</div>} />
+        </Routes>
           </main>
         </div>
         {selectedItem && (
@@ -259,6 +256,7 @@ function App() {
       </div>
     </CurrentTemperatureUnitContext.Provider>
   );
+  
 }
 
 export default App;

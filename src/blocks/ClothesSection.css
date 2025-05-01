@@ -1,0 +1,21 @@
+
+
+.clothes-section{
+    font-family:'Cabinet Grotesk';
+    display:flex;
+    align-items:center;
+}
+.add-items-button{
+    border:none;
+    margin-left:20px;
+    padding:0;
+    font-family:'Cabinet Grotesk';
+    background-color: transparent;
+    opacity:60%;
+    cursor:pointer;
+    font-size: 20px;
+    font-weight:700;
+}
+.title-button-container{
+    display:flex;
+}

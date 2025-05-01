@@ -23,20 +23,12 @@ function Main({ weatherData, onItemClick }) {
         <ul className="cards">
           {/*{ console.log(weatherData?.main.temp ? getWeatherCategory(weatherData.main.temp) : "loading weather" )}*/}
           {defaultClothingItems
-            .filter((item) => {
-              if (weatherData?.main.temp) {
-                return (
-                  item.weather === getWeatherCategory(weatherData.main.temp) ||
-                  item.weatherAlt === getWeatherCategory(weatherData.main.temp)
-                );
-              }
-            })
             .map((item) => {
               return (
                 <ItemCard
                   key={item._id}
                   item={item}
-                  onItemClick={onItemClick}
+                 onItemClick={onItemClick}
                 />
               );
             })}

@@ -10,11 +10,14 @@ function ItemModal({ item, onClose }) {
       <div className="itemModal__preview-container">
         <button className="itemModal__close-button" onClick={onClose}></button>
         <img
-          src={item.link}
+          src={item.imageUrl}
           className="itemModal__preview-image"
           alt={item.name}
         />
+        <div className="itemModal__name-delete-container">
         <p className="modal__preview-title">{item.name}</p>
+        <button className="itemModal__delete-button" onClick={()=>{console.log("delete button clicked")}}>Delete item</button>
+        </div>
         <p className="modal__preview-weather">Weather: {item.weather}</p>
       </div>
     </div>

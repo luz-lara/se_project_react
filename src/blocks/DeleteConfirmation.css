@@ -1,0 +1,10 @@
+.modal {
+  width: 670px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 16px;
+  position: relative;
+  border-radius: 10px;
+  font-family: "Cabinet Grotesk";
+  font-size:20px;
+}

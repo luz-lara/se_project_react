@@ -99,7 +99,7 @@ export const defaultClothingItems = [
     link: "https://media.istockphoto.com/id/973036448/photo/summer-casual-style-modern-woman-clothes-and-accessories-collage.jpg?s=1024x1024&w=is&k=20&c=8DgXOEcCa9UH_If2Emm8K7Qo-WeFprxxMtFsnfsjQFs=",
   },
   {
-    _id: 9,
+    _id: 8,
     name: "Sweater + Capris",
     weather: "warm",
     weatherAlt: "none",

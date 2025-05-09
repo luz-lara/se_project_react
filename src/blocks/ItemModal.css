@@ -8,6 +8,7 @@
     border-radius:16px;
     position: relative;
     border-radius: 10px;
+    font-family:'Cabinet Grotesk';
 }
 
 .itemModal__preview-image{
@@ -36,4 +37,9 @@
     margin-left:32px;
     margin-top: 12px;
     margin-bottom: 32px;
+  }
+  .itemModal__name-delete-container{
+    display: flex;
+    justify-content: space-between;
+
   }

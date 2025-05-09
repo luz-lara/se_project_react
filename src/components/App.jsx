@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import AddItemModal from "./AddItemModal.jsx";
 import Header from "./Header";
 import "../blocks/Header.css";
 import "../blocks/App.css";
@@ -16,7 +17,9 @@ import Footer from "./Footer.jsx";
 import { latitude, longitude } from "../utils/utils.js";
 import "../blocks/Footer.css";
 import { fetchWeatherData } from "../api.js";
-import { Routes, Route } from 'react-router-dom'; 
+import { defaultClothingItems } from "../utils/utils.js";
+import DeleteConfirmationModal from "./DeleteConfirmationModal.jsx";
+import { Routes, Route } from "react-router-dom";
 const currentDate = new Date().toLocaleString("default", {
   month: "long",
   day: "numeric",
@@ -25,6 +28,9 @@ import Profile from "./Profile";
 import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext.jsx";
 
 function App() {
+  const [isAddModalOpen, setAddModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
@@ -36,11 +42,15 @@ function App() {
   const [urlValid, setUrlValid] = useState("");
   const [selectedValue, setSelectedValue] = useState();
   const [radioError, setRadioError] = useState("");
+  const [clothingItems, setClothingItems] = useState([]);
   const isFormValid =
     name.trim() !== "" && Boolean(selectedValue) && urlValid === true;
   const [nameErrorMessage, setNameErrorMessage] = useState("");
   const [urlTouched, setIsUrlTouched] = useState(false);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const handleAddItemsSubmit = (newItem) => {
+    setClothingItems(newItem, ...clothingItems);
+  };
   const handleKeyDown = (e) => {
     if (e.key === "Escape") {
       closeItemModal() || handleCloseFormModal();
@@ -50,7 +60,7 @@ function App() {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
     console.log("listening to switch");
   };
-  console.log(currentTemperatureUnit);
+
   const handleChange = (e) => {
     const newName = e.target.value;
     setName(newName);
@@ -136,21 +146,42 @@ function App() {
   const openFormModal = () => {
     setModalOpen(true);
   };
-
+  //const handleAddButtonClick=()=>setIsAddModalOpen(true);
+  const closeAddModal = () => setAddModalOpen(false);
+  function handleAddItemSubmit(newItem) {
+    setClothingItems([newItem, ...clothingItems]);
+  }
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
     >
-
       <div className="page">
         <div className="page__content">
           <Header date={currentDate} openmodal={openFormModal} />
           <main>
-        <Routes>
-          <Route path="/" element={<Main weatherData={weatherData} onItemClick={handleItemClick} />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<div>Page not found</div>} />
-        </Routes>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Main
+                    weatherData={weatherData}
+                    onItemClick={handleItemClick}
+                    clothingItems={clothingItems}
+                  />
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <Profile
+                    setAddModalOpen={setAddModalOpen}
+                    clothingItems={clothingItems}
+                    onItemClick={handleItemClick}
+                  />
+                }
+              />
+              <Route path="*" element={<div>Page not found</div>} />
+            </Routes>
           </main>
         </div>
         {selectedItem && (
@@ -251,12 +282,18 @@ function App() {
             </div>
           </ModalWithForm>
         )}
-
+        {isAddModalOpen && (
+          <AddItemModal
+            onClose={closeAddModal}
+            onNameChange={handleChange}
+            onAddItem={handleAddItemSubmit}
+          />
+        )}
+        <DeleteConfirmationModal />
         <Footer />
       </div>
     </CurrentTemperatureUnitContext.Provider>
   );
-  
 }
 
 export default App;

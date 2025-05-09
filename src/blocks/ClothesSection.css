@@ -27,3 +27,14 @@
     margin-top:35px;
     padding-left:0;
 }
+.itemModal__delete-button{
+    font-family:'Cabinet Grotesk';
+    border: none;
+    background-color: white;
+    color:#FF4D00;
+    font-weight: 700;
+    margin-right:32px;
+    cursor:pointer;
+    font-size:20px;
+    line-height:24px;
+}

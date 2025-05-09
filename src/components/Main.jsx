@@ -9,7 +9,7 @@ import {
 } from "../utils/utils.js";
 import currentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext";
 
-function Main({ weatherData, onItemClick }) {
+function Main({ weatherData, onItemClick,clothingItems}) {
   const {currentTemperatureUnit}=useContext(currentTemperatureUnitContext);
   const celcius = `${Math.round(((weatherData?.main.temp - 32) * 5) / 9)}`;
   const farenheight=`${Math.round(weatherData?.main.temp)}`;
@@ -22,7 +22,7 @@ function Main({ weatherData, onItemClick }) {
       {
         <ul className="cards">
           {/*{ console.log(weatherData?.main.temp ? getWeatherCategory(weatherData.main.temp) : "loading weather" )}*/}
-          {defaultClothingItems
+          {clothingItems
             .map((item) => {
               return (
                 <ItemCard

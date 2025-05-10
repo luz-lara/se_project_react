@@ -9,6 +9,7 @@
     position: relative;
     border-radius: 10px;
     font-family:'Cabinet Grotesk';
+    z-index: 1000;
 }
 
 .itemModal__preview-image{

@@ -3,13 +3,19 @@ function DeleteConfirmationModal({ isOpen, onClose, onConfirm }) {
   if (!isOpen) return null;
 
   return (
-    <div className="modal">
-      <div className="modal__content">
-        <button className="modal__close" onClick={onClose}>X</button>
-        <p>Are you sure you want to delete this item? <br>This action is irreversible.</br></p>
-        <button onClick={onConfirm}>Yes, delete</button>
-        <button onClick={onClose}>Cancel</button>
-      </div>
+    <div className="delete__modal-overlay ">
+    <div className="delete__modal">
+        <button className="modal__close" onClick={onClose}></button>
+        <div className="delete__modal-paragraph-container">
+        <p className="delete__modal-paragraph">Are you sure you want to delete this item?</p>
+        <p className="delete__modal-paragraph">This action is irreversible</p>
+        </div>
+        <div className="delete__button-container">
+        <button className="delete__button delete__button-confirm"onClick={onConfirm}>Yes, delete</button>
+        <button className="delete__button delete__button-cancel"onClick={onClose}>Cancel</button>
+        </div>
+     
+    </div>
     </div>
   );
 }

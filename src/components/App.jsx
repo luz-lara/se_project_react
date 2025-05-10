@@ -19,6 +19,7 @@ import "../blocks/Footer.css";
 import { fetchWeatherData } from "../api.js";
 import { defaultClothingItems } from "../utils/utils.js";
 import DeleteConfirmationModal from "./DeleteConfirmationModal.jsx";
+import "../blocks/DeleteConfirmation.css"
 import { Routes, Route } from "react-router-dom";
 const currentDate = new Date().toLocaleString("default", {
   month: "long",
@@ -102,8 +103,17 @@ function App() {
     if (!isFormValid) {
       return;
     }
+    
+  const newItem = {
+    name: name,
+    imageUrl: url,
+    weather: selectedValue,
+    _id: Date.now(),
+  };
 
-    onClose();
+  setClothingItems([newItem, ...clothingItems]);
+  handleCloseFormModal();
+    
     console.log("form succesfully completed");
   };
   useEffect(() => {
@@ -119,6 +129,14 @@ function App() {
     }
     getWeather();
   }, []);
+  useEffect(() => {
+  if (!isModalOpen) {
+    setName('');
+    setUrl('');
+    setSelectedValue('');
+  }
+}, [isModalOpen]);
+
 
   useEffect(() => {
     if (!activeModal) return;
@@ -150,6 +168,26 @@ function App() {
   const closeAddModal = () => setAddModalOpen(false);
   function handleAddItemSubmit(newItem) {
     setClothingItems([newItem, ...clothingItems]);
+  }
+  function openConfirmationModal(item) {
+    setItemToDelete(item);
+    setIsConfirmModalOpen(true);
+    setSelectedItem(null);
+  }
+
+  function handleCardDelete() {
+    api
+      .deleteItem(itemToDelete._id)
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((i) => i._id !== itemToDelete._id)
+        );
+        setIsConfirmModalOpen(false);
+        setItemToDelete(null);
+      })
+      .catch((err) => {
+        console.error("Delete failed:", err);
+      });
   }
   return (
     <CurrentTemperatureUnitContext.Provider
@@ -189,6 +227,7 @@ function App() {
             item={selectedItem}
             onClose={closeItemModal}
             weatherType={weatherData.type}
+            onOpenConfirm={openConfirmationModal}
           />
         )}
         {isModalOpen && (
@@ -289,7 +328,12 @@ function App() {
             onAddItem={handleAddItemSubmit}
           />
         )}
-        <DeleteConfirmationModal />
+
+        <DeleteConfirmationModal
+          isOpen={isConfirmModalOpen}
+          onClose={() => setIsConfirmModalOpen(false)}
+          onConfirm={handleCardDelete}
+        />
         <Footer />
       </div>
     </CurrentTemperatureUnitContext.Provider>

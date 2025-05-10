@@ -7,14 +7,14 @@ function WeatherCard({ weatherData }) {
   const condition = weatherData?.weather?.[0].main;
   const isNight = weatherData?.weather?.[0].icon?.endsWith("n");
   const banner = weatherData ? getWeatherBanner(condition, isNight) : sunny;
-  const celcius = Math.round(((weatherData?.main.temp - 32) * 5) / 9);
-  const farenheight=Math.round(weatherData?.main.temp);
-  const {currentTemperatureUnit}=useContext(currentTemperatureUnitContext);
+  const farenheight = Math.round(weatherData?.main.temp);
+  const { currentTemperatureUnit } = useContext(currentTemperatureUnitContext);
   return (
     <section className="main__weatherCard">
       <p className="main__temperature">
-        {currentTemperatureUnit === "F" ? farenheight  : celcius }
-        &#8457;
+        {currentTemperatureUnit === "F"
+          ? `${farenheight}°F`
+          : `${Math.round(((weatherData?.main.temp - 32) * 5) / 9)}°C`}
       </p>
       <img
         src={`${banner}`}

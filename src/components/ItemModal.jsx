@@ -1,4 +1,4 @@
-function ItemModal({ item, onClose }) {
+function ItemModal({ item, onClose, onOpenConfirm}) {
   return (
     <div
       className={`modal__overlay ${item ? "modal__overlay--open" : ""}`}
@@ -16,7 +16,7 @@ function ItemModal({ item, onClose }) {
         />
         <div className="itemModal__name-delete-container">
         <p className="modal__preview-title">{item.name}</p>
-        <button className="itemModal__delete-button" onClick={()=>{console.log("delete button clicked")}}>Delete item</button>
+        <button className="itemModal__delete-button"onClick={() => onOpenConfirm(item)}>Delete item</button>
         </div>
         <p className="modal__preview-weather">Weather: {item.weather}</p>
       </div>

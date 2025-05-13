@@ -16,10 +16,9 @@ import "../blocks/Switch.css";
 import Footer from "./Footer.jsx";
 import { latitude, longitude } from "../utils/utils.js";
 import "../blocks/Footer.css";
-import { fetchWeatherData } from "../api.js";
-import { defaultClothingItems } from "../utils/utils.js";
+import { fetchWeatherData,getItems} from "../api.js";
 import DeleteConfirmationModal from "./DeleteConfirmationModal.jsx";
-import "../blocks/DeleteConfirmation.css"
+import "../blocks/DeleteConfirmation.css";
 import { Routes, Route } from "react-router-dom";
 const currentDate = new Date().toLocaleString("default", {
   month: "long",
@@ -103,17 +102,17 @@ function App() {
     if (!isFormValid) {
       return;
     }
-    
-  const newItem = {
-    name: name,
-    link: url,
-    weather: selectedValue,
-    _id: Date.now(),
-  };
 
-  setClothingItems([newItem, ...clothingItems]);
-  handleCloseFormModal();
-    
+    const newItem = {
+      name: name,
+      link: url,
+      weather: selectedValue,
+      _id: Date.now(),
+    };
+
+    setClothingItems([newItem, ...clothingItems]);
+    handleCloseFormModal();
+
     console.log("form succesfully completed");
   };
   useEffect(() => {
@@ -129,14 +128,14 @@ function App() {
     }
     getWeather();
   }, []);
-  useEffect(() => {
-  if (!isModalOpen) {
-    setName('');
-    setUrl('');
-    setSelectedValue('');
-  }
-}, [isModalOpen]);
 
+  useEffect(() => {
+    if (!isModalOpen) {
+      setName("");
+      setUrl("");
+      setSelectedValue("");
+    }
+  }, [isModalOpen]);
 
   useEffect(() => {
     if (!activeModal) return;
@@ -150,6 +149,12 @@ function App() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [activeModal]);
+
+  useEffect(() => {
+    getItems()
+      .then((data) => setClothingItems(data))
+      .catch((err) => console.error("Failed to fetch items:", err));
+  }, []);
 
   const handleCloseFormModal = () => {
     setModalOpen(false);

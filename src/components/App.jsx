@@ -106,7 +106,7 @@ function App() {
     
   const newItem = {
     name: name,
-    imageUrl: url,
+    link: url,
     weather: selectedValue,
     _id: Date.now(),
   };

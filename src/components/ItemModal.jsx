@@ -10,7 +10,7 @@ function ItemModal({ item, onClose, onOpenConfirm}) {
       <div className="itemModal__preview-container">
         <button className="itemModal__close-button" onClick={onClose}></button>
         <img
-          src={item.imageUrl}
+          src={item.link}
           className="itemModal__preview-image"
           alt={item.name}
         />

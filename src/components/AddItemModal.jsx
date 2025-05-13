@@ -62,7 +62,7 @@ import { defaultClothingItems } from "../utils/utils";
     }
     const newItem = {
       name: name,
-      imageUrl:url,
+      link:url,
       weather: selectedValue,
       _id: Date.now(), // fake ID for now
     };

@@ -38,7 +38,7 @@ function App() {
   const [name, setName] = useState("");
   const [isNameValid, setisNameValid] = useState();
   const [isError, setIsError] = useState();
-  const [url, setUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [urlValid, setUrlValid] = useState("");
   const [selectedValue, setSelectedValue] = useState();
   const [radioError, setRadioError] = useState("");
@@ -90,7 +90,7 @@ function App() {
     }
   };
   const handleUrlBlur = () => {
-    validateUrl(url);
+    validateUrl(imageUrl);
     setIsUrlTouched(true);
   };
 
@@ -105,7 +105,7 @@ function App() {
 
     const newItem = {
       name: name,
-      link: url,
+      imageUrl: imageUrl,
       weather: selectedValue,
       _id: Date.now(),
     };
@@ -132,7 +132,7 @@ function App() {
   useEffect(() => {
     if (!isModalOpen) {
       setName("");
-      setUrl("");
+      setImageUrl("");
       setSelectedValue("");
     }
   }, [isModalOpen]);

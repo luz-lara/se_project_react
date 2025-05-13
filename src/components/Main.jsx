@@ -29,7 +29,7 @@ function Main({ weatherData, onItemClick,clothingItems}) {
                   key={item._id}
                   item={item}
                  onItemClick={onItemClick}
-                 link={item.link}
+                 imageUrl={item.imageUrl}
                 />
               );
             })}

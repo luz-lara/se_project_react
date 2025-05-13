@@ -41,7 +41,7 @@ import { defaultClothingItems } from "../utils/utils";
   };
   const handleUrlChange = (event) => {
     const inputUrl = event.target.value;
-    setUrl(inputUrl);
+    setImageUrl(inputUrl);
     validateUrl(inputUrl);
     setIsUrlTouched(true);
     setIsError(false);
@@ -62,7 +62,7 @@ import { defaultClothingItems } from "../utils/utils";
     }
     const newItem = {
       name: name,
-      link:url,
+      imageUrl:imageUrl,
       weather: selectedValue,
       _id: Date.now(), // fake ID for now
     };
@@ -106,7 +106,7 @@ import { defaultClothingItems } from "../utils/utils";
       <input
       
         id="url"
-        value={url}
+        value={imageUrl}
         type="url"
         onChange={handleUrlChange}
         placeholder="Enter Image URL"

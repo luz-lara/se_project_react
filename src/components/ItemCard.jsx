@@ -3,7 +3,7 @@ function ItemCard({ item, onItemClick }) {
     <li className="itemCard">
       <p className="item__name">{item.name}</p>
       <img
-        src={item.link}
+        src={item.imageUrl}
         alt={item.name}
         className="item-image"
         onClick={() => onItemClick(item)}

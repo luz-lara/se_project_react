@@ -1,5 +1,5 @@
 
-function DeleteConfirmationModal({ isOpen, onClose, onConfirm }) {
+function DeleteConfirmationModal({ isOpen, onClose, onConfirm,item}) {
   if (!isOpen) return null;
 
   return (
@@ -11,7 +11,7 @@ function DeleteConfirmationModal({ isOpen, onClose, onConfirm }) {
         <p className="delete__modal-paragraph">This action is irreversible</p>
         </div>
         <div className="delete__button-container">
-        <button className="delete__button delete__button-confirm"onClick={onConfirm}>Yes, delete</button>
+        <button className="delete__button delete__button-confirm" onClick={() => onConfirm(item)}>Yes, delete</button>
         <button className="delete__button delete__button-cancel"onClick={onClose}>Cancel</button>
         </div>
      

@@ -16,7 +16,7 @@ import "../blocks/Switch.css";
 import Footer from "./Footer.jsx";
 import { latitude, longitude } from "../utils/utils.js";
 import "../blocks/Footer.css";
-import { fetchWeatherData,getItems} from "../api.js";
+import { fetchWeatherData, getItems, addItem, deleteItem } from "../api.js";
 import DeleteConfirmationModal from "./DeleteConfirmationModal.jsx";
 import "../blocks/DeleteConfirmation.css";
 import { Routes, Route } from "react-router-dom";
@@ -56,6 +56,14 @@ function App() {
       closeItemModal() || handleCloseFormModal();
     }
   };
+  const handleAddItem = async (newItem) => {
+    try {
+      const savedItem = await addItem(newItem);
+      setClothingItems((items) => [savedItem, ...items]);
+    } catch (err) {
+      console.error("Error adding item:", err);
+    }
+  };
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
     console.log("listening to switch");
@@ -76,7 +84,7 @@ function App() {
   };
   const handleUrlChange = (event) => {
     const inputUrl = event.target.value;
-    setUrl(inputUrl);
+    setImageUrl(inputUrl);
     validateUrl(inputUrl);
     setIsUrlTouched(true);
     setIsError(false);
@@ -110,7 +118,8 @@ function App() {
       _id: Date.now(),
     };
 
-    setClothingItems([newItem, ...clothingItems]);
+    //setClothingItems([newItem, ...clothingItems]);
+    handleAddItem(newItem);
     handleCloseFormModal();
 
     console.log("form succesfully completed");
@@ -175,25 +184,26 @@ function App() {
     setClothingItems([newItem, ...clothingItems]);
   }
   function openConfirmationModal(item) {
-    setItemToDelete(item);
+    setSelectedItem(item);
     setIsConfirmModalOpen(true);
-    setSelectedItem(null);
+    // setSelectedItem(null);
   }
 
-  function handleCardDelete() {
-    api
-      .deleteItem(itemToDelete._id)
-      .then(() => {
-        setClothingItems((prevItems) =>
-          prevItems.filter((i) => i._id !== itemToDelete._id)
-        );
-        setIsConfirmModalOpen(false);
-        setItemToDelete(null);
-      })
-      .catch((err) => {
-        console.error("Delete failed:", err);
-      });
+const handleCardDelete = async (item) => {
+  const id=item._id
+  console.log(id);
+  if (!id) {
+    console.error("Item or item.id is null:", item);
+    return;
   }
+
+  try {
+    await deleteItem(id); // call to API
+    getItems((prev) => prev.filter((i) => i._id !== item._id)); // update local state
+  } catch (error) {
+    console.error("Error deleting item:", error);
+  }
+};
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
@@ -231,7 +241,7 @@ function App() {
           <ItemModal
             item={selectedItem}
             onClose={closeItemModal}
-            weatherType={weatherData.type}
+            weatherType={weatherData?.type}
             onOpenConfirm={openConfirmationModal}
           />
         )}
@@ -268,7 +278,7 @@ function App() {
             </div>
             <input
               id="url"
-              value={url}
+              value={imageUrl}
               type="url"
               onChange={handleUrlChange}
               placeholder="Enter Image URL"
@@ -330,14 +340,15 @@ function App() {
           <AddItemModal
             onClose={closeAddModal}
             onNameChange={handleChange}
-            onAddItem={handleAddItemSubmit}
+            onAddItem={handleAddItem}
           />
         )}
 
         <DeleteConfirmationModal
           isOpen={isConfirmModalOpen}
+          itemToDelete={selectedItem}
           onClose={() => setIsConfirmModalOpen(false)}
-          onConfirm={handleCardDelete}
+           onConfirm={()=>handleCardDelete(selectedItem)}
         />
         <Footer />
       </div>

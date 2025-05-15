@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react'
-
-import clearNight from "../images/clear-nightt.png"
-import sunny from "../images/sunny.png"
+import clearNight from "../images/clear-nightt.png";
+import sunny from "../images/sunny.png";
 import cloudyDay from "../images/cloudy.png";
 import cloudyNight from "../images/cloudy-night.png";
 import rainDay from "../images/rain.png";
@@ -14,19 +12,17 @@ import fogNight from "../images/fog-night.png";
 import fogDay from "../images/fog.png";
 export const APIkey = "3a99b729275e704daca18d1a6457b1f1";
 export const latitude = 40.7128;
-export const longitude = -74.0060;
-
-
+export const longitude = -74.006;
 
 export const getWeatherCategory = (temp) => {
   if (temp >= 75) {
-    return 'hot';
+    return "hot";
   } else if (temp >= 60) {
-    return 'warm';
+    return "warm";
   } else {
-    return 'cold';
+    return "cold";
   }
-}
+};
 export const getWeatherBanner = (condition, isNight) => {
   if (condition === "Clear") return isNight ? clearNight : sunny;
   else if (condition === "Clouds") return isNight ? cloudyNight : cloudyDay;
@@ -37,9 +33,14 @@ export const getWeatherBanner = (condition, isNight) => {
   else {
     return isNight ? clearNight : sunny;
   }
-}
+};
 export const currentHour = new Date().getHours();
-export const greeting = currentHour < 12 ? `Good Morning Terrence today is` : currentHour < 18 ? "Good afternoon Terrence today is" : "Good evening Terrence tonight is";
+export const greeting =
+  currentHour < 12
+    ? `Good Morning Terrence today is`
+    : currentHour < 18
+    ? "Good afternoon Terrence today is"
+    : "Good evening Terrence tonight is";
 
 export const defaultClothingItems = [
   {
@@ -124,7 +125,7 @@ export const defaultClothingItems = [
     name: "Sneakers",
     weather: "warm",
     weatherAlt: "hot",
-    link: "https://media.istockphoto.com/id/147648862/photo/pink-sneaker.jpg?s=2048x2048&w=is&k=20&c=NjtqahHGoelqjnPk5WSvCcwb-Yg3wsTAGnZZjZsEaTM="
+    link: "https://media.istockphoto.com/id/147648862/photo/pink-sneaker.jpg?s=2048x2048&w=is&k=20&c=NjtqahHGoelqjnPk5WSvCcwb-Yg3wsTAGnZZjZsEaTM=",
   },
   {
     _id: 12,
@@ -147,9 +148,4 @@ export const defaultClothingItems = [
     weatherAlt: "warm",
     link: "https://media.istockphoto.com/id/1060566234/photo/warm-winter-hat.jpg?s=2048x2048&w=is&k=20&c=m09JFi1NzQ_pbgfrmxZJY-cEZzDBkY-OvT8lj5LoPz8=",
   },
-]
-
-export const handleRadioChange = (e) => {
-  setSelectedValue(e.target.value);
-
-};
+];

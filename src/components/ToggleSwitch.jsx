@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext";
 
-const ToogleSwitch = () => {
+const ToggleSwitch = () => {
   const {handleToggleSwitchChange,currentTemperatureUnit}=useContext(CurrentTemperatureUnitContext)
   return (
     <>
@@ -15,4 +15,4 @@ const ToogleSwitch = () => {
   );
 };
 
-export default ToogleSwitch;
+export default ToggleSwitch;

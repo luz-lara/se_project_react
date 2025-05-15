@@ -1,7 +1,7 @@
 import { fetchWeatherData } from "../api";
 import logo from "../images/Logo.svg";
 import avatar from "../images/avatar.svg";
-import ToogleSwitch from "./ToogleSwitch";
+import ToogleSwitch from "./ToggleSwitch";
 import { Link } from "react-router-dom";
 
 function Header(props) {

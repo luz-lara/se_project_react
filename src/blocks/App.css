@@ -3,6 +3,7 @@
 .page {
     background-color:#f3f3f3;
     max-width: 1360px;
+    height:100%;
     
 }
 .page__content {

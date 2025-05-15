@@ -41,36 +41,6 @@
       "name": "T-Shirt",
       "weather": "hot",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
-    },
-    {
-      "name": "LUZ A LARA",
-      "imageUrl": "https://media.istockphoto.com/id/1353890227/vector/red-dress-on-the-wardrobe-hanger-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=yHp33lAl5MMRjvDOQ2akrZV80iGy7v9NACKgY_6hUYo=",
-      "weather": "warm",
-      "_id": 1747183455628
-    },
-    {
-      "name": "Red dress",
-      "imageUrl": "https://media.istockphoto.com/id/1353890227/vector/red-dress-on-the-wardrobe-hanger-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=yHp33lAl5MMRjvDOQ2akrZV80iGy7v9NACKgY_6hUYo=",
-      "weather": "warm",
-      "_id": 1747183569029
-    },
-    {
-      "name": "red dress",
-      "imageUrl": "https://media.istockphoto.com/id/1353890227/vector/red-dress-on-the-wardrobe-hanger-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=yHp33lAl5MMRjvDOQ2akrZV80iGy7v9NACKgY_6hUYo=",
-      "weather": "warm",
-      "_id": 1747183675710
-    },
-    {
-      "name": "Red dress",
-      "imageUrl": "https://media.istockphoto.com/id/1353890227/vector/red-dress-on-the-wardrobe-hanger-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=yHp33lAl5MMRjvDOQ2akrZV80iGy7v9NACKgY_6hUYo=",
-      "weather": "warm",
-      "_id": 1747184059750
-    },
-    {
-      "name": "Red dress",
-      "imageUrl": "https://media.istockphoto.com/id/1353890227/vector/red-dress-on-the-wardrobe-hanger-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=yHp33lAl5MMRjvDOQ2akrZV80iGy7v9NACKgY_6hUYo=",
-      "weather": "warm",
-      "_id": 1747185946739
     }
   ]
 }

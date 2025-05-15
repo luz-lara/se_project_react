@@ -43,6 +43,7 @@ function App() {
   const [selectedValue, setSelectedValue] = useState();
   const [radioError, setRadioError] = useState("");
   const [clothingItems, setClothingItems] = useState([]);
+
   const isFormValid =
     name.trim() !== "" && Boolean(selectedValue) && urlValid === true;
   const [nameErrorMessage, setNameErrorMessage] = useState("");
@@ -184,13 +185,15 @@ function App() {
     setClothingItems([newItem, ...clothingItems]);
   }
   function openConfirmationModal(item) {
-    setSelectedItem(item);
+    setItemToDelete(item);
+    closeItemModal();
     setIsConfirmModalOpen(true);
-    // setSelectedItem(null);
+   
   }
 
 const handleCardDelete = async (item) => {
-  const id=item._id
+  setItemToDelete(item)
+  const id=itemToDelete._id
   console.log(id);
   if (!id) {
     console.error("Item or item.id is null:", item);
@@ -199,7 +202,8 @@ const handleCardDelete = async (item) => {
 
   try {
     await deleteItem(id); // call to API
-    getItems((prev) => prev.filter((i) => i._id !== item._id)); // update local state
+    setClothingItems((prev) => prev.filter((i) => i._id !== item._id)); // update local state
+    setIsConfirmModalOpen(false)
   } catch (error) {
     console.error("Error deleting item:", error);
   }
@@ -348,7 +352,7 @@ const handleCardDelete = async (item) => {
           isOpen={isConfirmModalOpen}
           itemToDelete={selectedItem}
           onClose={() => setIsConfirmModalOpen(false)}
-           onConfirm={()=>handleCardDelete(selectedItem)}
+           onConfirm={()=>handleCardDelete(itemToDelete)}
         />
         <Footer />
       </div>

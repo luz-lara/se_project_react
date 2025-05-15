@@ -19,9 +19,9 @@ export const longitude = -74.0060;
 
 
 export const getWeatherCategory = (temp) => {
-  if (temp >= 86) {
+  if (temp >= 75) {
     return 'hot';
-  } else if (temp >= 66) {
+  } else if (temp >= 60) {
     return 'warm';
   } else {
     return 'cold';

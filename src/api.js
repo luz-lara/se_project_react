@@ -1,5 +1,5 @@
 // 🔧 NOTE FOR INSTRUCTORS:
-// This project was developed entirely in GitHub Codespaces(I don't have a laptop-damaged and using a public computer) for convenience, as I do not have a personal computer.
+// This project was developed entirely in GitHub Codespaces(I don't have a laptop-damaged and using a public computer)
 // The baseUrl below is set to the exposed Codespaces server.
 // 👉 If you're testing this locally, please comment out the Codespaces URL and uncomment the local development URL.
 

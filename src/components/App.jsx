@@ -28,35 +28,80 @@ import Profile from "./Profile";
 import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext.jsx";
 
 function App() {
+  // === Modal States ===
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [itemToDelete, setItemToDelete] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [weatherData, setWeatherData] = useState(null);
-  const activeModal = isModalOpen || selectedItem;
-  const [name, setName] = useState("");
-  const [isNameValid, setisNameValid] = useState();
-  const [isError, setIsError] = useState();
-  const [imageUrl, setImageUrl] = useState("");
-  const [urlValid, setUrlValid] = useState("");
-  const [selectedValue, setSelectedValue] = useState();
-  const [radioError, setRadioError] = useState("");
-  const [clothingItems, setClothingItems] = useState([]);
 
+  // === Item States ===
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [clothingItems, setClothingItems] = useState([]);
+  const activeModal = isModalOpen || selectedItem;
+  // === Weather and Temperature ===
+  const [weatherData, setWeatherData] = useState(null);
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+
+  // === Form States ===
+  const [name, setName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
+  const [isNameValid, setisNameValid] = useState();
+  const [urlValid, setUrlValid] = useState("");
+  const [urlTouched, setIsUrlTouched] = useState(false);
+  const [radioError, setRadioError] = useState("");
+  const [nameErrorMessage, setNameErrorMessage] = useState("");
+  const [isError, setIsError] = useState();
   const isFormValid =
     name.trim() !== "" && Boolean(selectedValue) && urlValid === true;
-  const [nameErrorMessage, setNameErrorMessage] = useState("");
-  const [urlTouched, setIsUrlTouched] = useState(false);
-  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-  const handleAddItemsSubmit = (newItem) => {
-    setClothingItems(newItem, ...clothingItems);
-  };
-  const handleKeyDown = (e) => {
-    if (e.key === "Escape") {
-      closeItemModal() || handleCloseFormModal();
+
+  //=== useEffects ===
+  useEffect(() => {
+    async function getWeather() {
+      try {
+        const data = await fetchWeatherData(latitude, longitude);
+        if (data) setWeatherData(data);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  };
+    getWeather();
+  }, []);
+
+  useEffect(() => {
+    getItems()
+      .then((data) => setClothingItems(data))
+      .catch((err) => console.error("Failed to fetch items:", err));
+  }, []);
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setName("");
+      setImageUrl("");
+      setSelectedValue("");
+    }
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    if (!activeModal) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        closeItemModal() || handleCloseFormModal();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [activeModal]);
+
+  // === modal handlers ===
+  const openFormModal = () => setModalOpen(true);
+  const closeAddModal = () => setAddModalOpen(false);
+  const handleCloseFormModal = () => setModalOpen(false);
+  const closeItemModal = () => setSelectedItem(null);
+
+  // === item & form logic ===
+  const handleItemClick = (item) => setSelectedItem(item);
+
   const handleAddItem = async (newItem) => {
     try {
       const savedItem = await addItem(newItem);
@@ -65,10 +110,28 @@ function App() {
       console.error("Error adding item:", err);
     }
   };
-  const handleToggleSwitchChange = () => {
-    setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
-    console.log("listening to switch");
+
+  const handleCardDelete = async (item) => {
+    const id = item._id;
+    if (!id) {
+      console.error("Item or item.id is null:", item);
+      return;
+    }
+    try {
+      await deleteItem(id);
+      setClothingItems((prev) => prev.filter((i) => i._id !== item._id));
+      setIsConfirmModalOpen(false);
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
   };
+
+  const openConfirmationModal = (item) => {
+    setItemToDelete(item);
+    closeItemModal();
+    setIsConfirmModalOpen(true);
+  };
+  // === Form field handlers ===
 
   const handleChange = (e) => {
     const newName = e.target.value;
@@ -83,12 +146,37 @@ function App() {
       setIsError(true);
     }
   };
+
   const handleUrlChange = (event) => {
     const inputUrl = event.target.value;
     setImageUrl(inputUrl);
     validateUrl(inputUrl);
     setIsUrlTouched(true);
     setIsError(false);
+  };
+
+  const handleUrlBlur = () => {
+    validateUrl(imageUrl);
+    setIsUrlTouched(true);
+  };
+
+  const handleRadioChange = (e) => {
+    setSelectedValue(e.target.value);
+  };
+
+  const handleGarmentFormSubmit = (e) => {
+    e.preventDefault();
+    if (!isFormValid) return;
+
+    const newItem = {
+      name,
+      imageUrl,
+      weather: selectedValue,
+      _id: Date.now(),
+    };
+
+    handleAddItem(newItem);
+    handleCloseFormModal();
   };
   const validateUrl = (input) => {
     try {
@@ -98,120 +186,29 @@ function App() {
       return setUrlValid(false);
     }
   };
-  const handleUrlBlur = () => {
-    validateUrl(imageUrl);
-    setIsUrlTouched(true);
-  };
 
-  const handleRadioChange = (e) => {
-    setSelectedValue(e.target.value);
-  };
-  const handleGarmentFormSubmit = (e) => {
-    e.preventDefault();
-    if (!isFormValid) {
-      return;
+  // === misc===
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") {
+      closeItemModal() || handleCloseFormModal();
     }
-
-    const newItem = {
-      name: name,
-      imageUrl: imageUrl,
-      weather: selectedValue,
-      _id: Date.now(),
-    };
-    handleAddItem(newItem);
-    handleCloseFormModal();
-
-    console.log("form succesfully completed");
   };
-  useEffect(() => {
-    async function getWeather() {
-      try {
-        const data = await fetchWeatherData(latitude, longitude);
-        if (data) {
-          setWeatherData(data);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getWeather();
-  }, []);
-
-  useEffect(() => {
-    if (!isModalOpen) {
-      setName("");
-      setImageUrl("");
-      setSelectedValue("");
-    }
-  }, [isModalOpen]);
-
-  useEffect(() => {
-    if (!activeModal) return;
-
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        closeItemModal() || handleCloseFormModal();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [activeModal]);
-
-  useEffect(() => {
-    getItems()
-      .then((data) => setClothingItems(data))
-      .catch((err) => console.error("Failed to fetch items:", err));
-  }, []);
-
-  const handleCloseFormModal = () => {
-    setModalOpen(false);
-  };
-  const handleItemClick = (item) => {
-    setSelectedItem(item);
+  const handleToggleSwitchChange = () => {
+    setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
+    console.log("listening to switch");
   };
 
-  const closeItemModal = () => {
-    setSelectedItem(null);
-  };
-  const openFormModal = () => {
-    setModalOpen(true);
-  };
-  const closeAddModal = () => setAddModalOpen(false);
-  function handleAddItemSubmit(newItem) {
-    setClothingItems([newItem, ...clothingItems]);
-  }
-  function openConfirmationModal(item) {
-    setItemToDelete(item);
-    closeItemModal();
-    setIsConfirmModalOpen(true);
-   
-  }
-
-const handleCardDelete = async (item) => {
-  setItemToDelete(item)
-  const id=itemToDelete._id
-  console.log(id);
-  if (!id) {
-    console.error("Item or item.id is null:", item);
-    return;
-  }
-
-  try {
-    await deleteItem(id); // call to API
-    setClothingItems((prev) => prev.filter((i) => i._id !== item._id)); // update local state
-    setIsConfirmModalOpen(false)
-  } catch (error) {
-    console.error("Error deleting item:", error);
-  }
-};
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
     >
       <div className="page">
         <div className="page__content">
-          <Header date={currentDate} openmodal={openFormModal} weatherData={weatherData} />
+          <Header
+            date={currentDate}
+            openmodal={openFormModal}
+            weatherData={weatherData}
+          />
           <main>
             <Routes>
               <Route
@@ -350,7 +347,7 @@ const handleCardDelete = async (item) => {
           isOpen={isConfirmModalOpen}
           itemToDelete={selectedItem}
           onClose={() => setIsConfirmModalOpen(false)}
-           onConfirm={()=>handleCardDelete(itemToDelete)}
+          onConfirm={() => handleCardDelete(itemToDelete)}
         />
         <Footer />
       </div>

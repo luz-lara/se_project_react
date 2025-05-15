@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import "../blocks/ClothesSection.css"
 import {
-  defaultClothingItems,
   getWeatherCategory,
 } from "../utils/utils.js";
 import ItemCard from "./ItemCard";
 
-function ClothesSection({ setAddModalOpen ,clothingItems,onItemClick}) {
-  const [showModal, setShowModal] = useState(false);
+function ClothesSection({ setAddModalOpen ,clothingItems,onItemClick,weatherData}) {
+  
 
   const handleAddItem = () => {
     setAddModalOpen(true);
@@ -26,8 +25,9 @@ function ClothesSection({ setAddModalOpen ,clothingItems,onItemClick}) {
     </div>   
     {
         <ul className="cards">
-          {/*{ console.log(weatherData?.main.temp ? getWeatherCategory(weatherData.main.temp) : "loading weather" )}*/}
+          {console.log(weatherData)}
           {clothingItems
+          .filter((item) => item.weather.toLowerCase() ===getWeatherCategory(weatherData?.main.temp ))
             .map((item) => {
               return (
                 <ItemCard

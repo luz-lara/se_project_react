@@ -118,8 +118,6 @@ function App() {
       weather: selectedValue,
       _id: Date.now(),
     };
-
-    //setClothingItems([newItem, ...clothingItems]);
     handleAddItem(newItem);
     handleCloseFormModal();
 
@@ -179,7 +177,6 @@ function App() {
   const openFormModal = () => {
     setModalOpen(true);
   };
-  //const handleAddButtonClick=()=>setIsAddModalOpen(true);
   const closeAddModal = () => setAddModalOpen(false);
   function handleAddItemSubmit(newItem) {
     setClothingItems([newItem, ...clothingItems]);
@@ -214,7 +211,7 @@ const handleCardDelete = async (item) => {
     >
       <div className="page">
         <div className="page__content">
-          <Header date={currentDate} openmodal={openFormModal} />
+          <Header date={currentDate} openmodal={openFormModal} weatherData={weatherData} />
           <main>
             <Routes>
               <Route
@@ -234,6 +231,7 @@ const handleCardDelete = async (item) => {
                     setAddModalOpen={setAddModalOpen}
                     clothingItems={clothingItems}
                     onItemClick={handleItemClick}
+                    weatherData={weatherData}
                   />
                 }
               />

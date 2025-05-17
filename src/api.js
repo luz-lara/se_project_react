@@ -11,6 +11,17 @@ export const longitude = -74.006;
 export const baseUrl =
   "https://animated-eureka-4x55jvrpp9rcpxw-3001.app.github.dev/items";
 
+function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Error: ${res.status}`);
+}
+
+function request(url, options) {
+  return fetch(url, options).then(checkResponse);
+}
+
 export const fetchWeatherData = async () => {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`;
 
@@ -19,29 +30,28 @@ export const fetchWeatherData = async () => {
     if (!response.ok) {
       throw new Error("Failed to fetch weather data");
     }
-    const data = await response.json(); // Parse the response JSON
-    return data; // Return the data to the caller
+    const data = await response.json(); 
+    return data; 
   } catch (error) {
-    throw new Error(error.message); // Handle errors and pass them back
+    throw new Error(error.message); 
   }
 };
 
-export const getItems = async () => {
-  const res = await fetch(`${baseUrl}`);
-  return res.json();
+export const getItems = () => {
+  return request(baseUrl);
 };
 
-export const addItem = async (item) => {
-  const res = await fetch(`${baseUrl}`, {
+export const addItem = (item) => {
+  return request(baseUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(item),
   });
-  return res.json();
 };
 
-export const deleteItem = async (id) => {
-  await fetch(`${baseUrl}/${id}`, {
+
+export const deleteItem = (id) => {
+  return request(`${baseUrl}/${id}`, {
     method: "DELETE",
   });
 };

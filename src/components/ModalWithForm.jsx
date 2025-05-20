@@ -1,6 +1,6 @@
 export default function ModalWithForm({
   title,
-  submitButton,
+  onSubmit,
   children,
   onClose,
   buttonText,
@@ -17,13 +17,12 @@ export default function ModalWithForm({
       <div className="modal modal__container">
         <button className="modal__close-button" onClick={onClose}></button>
         <p className="modal__heading">{title}</p>
-        <form className={`modal`}>
+        <form className={`modal`} onSubmit={onSubmit}>
           {children}
 
           <button
             className="modal__form-bbtn"
             type="submit"
-            onClick={submitButton}
             disabled={!isValid}
             style={{ opacity: !isValid ? 0.5 : 1 }}
           >

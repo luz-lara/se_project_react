@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
 import ModalWithForm from "./ModalWithForm";
-import { defaultClothingItems } from "../utils/utils";
+import { useFormAndValidation } from "../hooks/useFormValidation";
 
- const AddItemModal = ({ isOpen, onClose ,isValid,onAddItem}) => {
-  const [name, setName] = useState("");
-  const [isNameValid, setisNameValid] = useState();
-  const [nameErrorMessage, setNameErrorMessage] = useState("");
-  const [isError, setIsError] = useState();
+const AddItemModal = ({ isOpen, onClose, onAddItem }) => {
+  const { values, handleChange, errors, isValid, resetForm, setValues } =
+    useFormAndValidation();
+
   const [radioError, setRadioError] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [url, setUrl] = useState("");
-  const [urlValid, setUrlValid] = useState("");
-  const [urlTouched, setIsUrlTouched] = useState(false);
-  const [selectedValue, setSelectedValue] = useState();
+  const [selectedValue, setSelectedValue] = useState("");
   const [weather, setWeather] = useState("");
-  const isFormValid =
-    name.trim() !== "" && Boolean(selectedValue) && urlValid === true;
+  const isFormValid = isValid && selectedValue !== "";
+
   const handleRadioChange = (e) => {
     setSelectedValue(e.target.value);
   };
@@ -26,7 +22,7 @@ import { defaultClothingItems } from "../utils/utils";
       setWeather("");
     }
   }, [isOpen]);
-  const handleChange = (e) => {
+  const handleChanges = (e) => {
     const newName = e.target.value;
     setName(newName);
     if (newName.trim() !== "") {
@@ -54,21 +50,20 @@ import { defaultClothingItems } from "../utils/utils";
       return setUrlValid(false);
     }
   };
-  
+
   const handleProfileFormSubmit = (e) => {
     e.preventDefault();
     if (!isFormValid) {
       return;
     }
     const newItem = {
-      name: name,
-      imageUrl:imageUrl,
+      name: values.name,
+      imageUrl: values.imageUrl,
       weather: selectedValue,
       _id: Date.now(), // fake ID for now
     };
 
     onAddItem(newItem);
-    onClose();
     console.log("form succesfully completed");
   };
   return (
@@ -76,7 +71,7 @@ import { defaultClothingItems } from "../utils/utils";
       isOpen={isOpen}
       onClose={onClose}
       isValid={isFormValid}
-      submitButton={handleProfileFormSubmit}
+      onSubmit={handleProfileFormSubmit}
       title={"Add New Garment"}
       buttonText={"Add Garment"}
     >
@@ -84,13 +79,14 @@ import { defaultClothingItems } from "../utils/utils";
         <label className="modal__input-title" htmlFor="name">
           Name
         </label>
-        <p style={{ color: "red", margin: 0 }}> {nameErrorMessage}</p>
+        <p style={{ color: "red", margin: 0 }}> {errors.name}</p>
       </div>
       <input
         id="name"
-        value={name}
-        type="text"
+        name="name"
+        value={values.name || ""}
         onChange={handleChange}
+        type="text"
         placeholder="Enter Name"
         className="modal__input"
         required
@@ -99,18 +95,17 @@ import { defaultClothingItems } from "../utils/utils";
         <label htmlFor="url" className="modal__input-title">
           Image URL
         </label>
-        {!urlValid && urlTouched && (
-                <p style={{ color: "red", margin: 0 }}> *Invalid URL</p>
-              )}
+        <p style={{ color: "red", margin: 0 }}>{errors.imageUrl}</p>
       </div>
       <input
-      
         id="url"
-        value={imageUrl}
+        name="imageUrl"
+        value={values.imageUrl || ""}
+        onChange={handleChange}
         type="url"
-        onChange={handleUrlChange}
         placeholder="Enter Image URL"
         className="modal__input"
+        required
       />
       <div className="radio">
         <p className="modal__input-title">Select weather type:</p>{" "}

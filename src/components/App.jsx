@@ -106,6 +106,7 @@ function App() {
     try {
       const savedItem = await addItem(newItem);
       setClothingItems((items) => [savedItem, ...items]);
+      handleCloseFormModal()
     } catch (err) {
       console.error("Error adding item:", err);
     }
@@ -176,7 +177,7 @@ function App() {
     };
 
     handleAddItem(newItem);
-    handleCloseFormModal();
+   // handleCloseFormModal();
   };
   const validateUrl = (input) => {
     try {
@@ -245,95 +246,11 @@ function App() {
           />
         )}
         {isModalOpen && (
-          <ModalWithForm
-            title="New garment"
-            buttonText="Add garment"
+          <AddItemModal
             onClose={handleCloseFormModal}
-            submitButton={handleGarmentFormSubmit}
-            isValid={isFormValid}
-            isModalOpen={true}
-          >
-            <div className="modal__label_nd_error">
-              <label className="modal__input-title" htmlFor="name">
-                Name
-              </label>
-              <p style={{ color: "red", margin: 0 }}> {nameErrorMessage}</p>
-            </div>
-            <input
-              id="name"
-              value={name}
-              type="text"
-              onChange={handleChange}
-              placeholder="Enter Name"
-              className="modal__input"
-            />
-            <div className="modal__label_nd_error">
-              <label htmlFor="url" className="modal__input-title">
-                Image URL{" "}
-              </label>
-              {!urlValid && urlTouched && (
-                <p style={{ color: "red", margin: 0 }}> *Invalid URL</p>
-              )}
-            </div>
-            <input
-              id="url"
-              value={imageUrl}
-              type="url"
-              onChange={handleUrlChange}
-              placeholder="Enter Image URL"
-              onBlur={handleUrlBlur}
-              className="modal__input"
-            />
-            <div className="radio">
-              <p className="modal__input-title">Select weather type:</p>{" "}
-              {radioError && <p>Please select weather option</p>}
-              <div>
-                <label style={{ opacity: selectedValue === "hot" ? 1 : 0.5 }}>
-                  <input
-                    type="radio"
-                    name="weather"
-                    value="hot"
-                    checked={selectedValue === "hot"}
-                    onChange={handleRadioChange}
-                    style={{
-                      accentColor: selectedValue === "hot" ? "black" : "",
-                    }}
-                  />
-                  Hot
-                </label>
-              </div>
-              <div>
-                <label style={{ opacity: selectedValue === "warm" ? 1 : 0.5 }}>
-                  <input
-                    type="radio"
-                    name="weather"
-                    value="warm"
-                    checked={selectedValue === "warm"}
-                    onChange={handleRadioChange}
-                    style={{
-                      accentColor: selectedValue === "warm" ? "black" : "",
-                    }}
-                  />
-                  Warm
-                </label>
-              </div>
-              <div>
-                <label style={{ opacity: selectedValue === "cold" ? 1 : 0.5 }}>
-                  <input
-                    type="radio"
-                    name="weather"
-                    value="cold"
-                    checked={selectedValue === "cold"}
-                    onChange={handleRadioChange}
-                    style={{
-                      accentColor: selectedValue === "cold" ? "black" : "",
-                    }}
-                  />
-                  Cold
-                </label>
-              </div>
-            </div>
-          </ModalWithForm>
+            onNameChange={handleChange}
+            onAddItem={handleAddItem}
+          />
         )}
         {isAddModalOpen && (
           <AddItemModal

@@ -207,7 +207,7 @@ function App() {
         <div className="page__content">
           <Header
             date={currentDate}
-            openmodal={openFormModal}
+            setAddModalOpen={setAddModalOpen}
             weatherData={weatherData}
           />
           <main>
@@ -245,13 +245,7 @@ function App() {
             onOpenConfirm={openConfirmationModal}
           />
         )}
-        {isModalOpen && (
-          <AddItemModal
-            onClose={handleCloseFormModal}
-            onNameChange={handleChange}
-            onAddItem={handleAddItem}
-          />
-        )}
+       
         {isAddModalOpen && (
           <AddItemModal
             onClose={closeAddModal}

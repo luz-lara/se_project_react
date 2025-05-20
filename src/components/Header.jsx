@@ -17,7 +17,11 @@ function Header(props) {
       </div>
       <div className="header__user-container">
         <ToggleSwitch />
-        <button className="header__add-clothes-bttn" onClick={props.openmodal}>
+
+        <button
+          className="header__add-clothes-bttn"
+          onClick={props.setAddModalOpen}
+        >
           + Add clothes
         </button>
         <Link to="/profile" className="no-underline">

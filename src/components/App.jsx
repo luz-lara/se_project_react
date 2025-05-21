@@ -37,7 +37,7 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [clothingItems, setClothingItems] = useState([]);
-  const activeModal = isModalOpen || selectedItem;
+  const activeModal = isAddModalOpen || selectedItem;
   // === Weather and Temperature ===
   const [weatherData, setWeatherData] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -86,7 +86,7 @@ function App() {
     if (!activeModal) return;
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
-        closeItemModal() || handleCloseFormModal();
+        closeItemModal() || closeAddModal();
       }
     };
     document.addEventListener("keydown", handleKeyDown);
@@ -106,7 +106,7 @@ function App() {
     try {
       const savedItem = await addItem(newItem);
       setClothingItems((items) => [savedItem, ...items]);
-      handleCloseFormModal()
+      closeAddModal()
     } catch (err) {
       console.error("Error adding item:", err);
     }
@@ -177,7 +177,7 @@ function App() {
     };
 
     handleAddItem(newItem);
-   // handleCloseFormModal();
+ 
   };
   const validateUrl = (input) => {
     try {
@@ -248,7 +248,7 @@ function App() {
        
         {isAddModalOpen && (
           <AddItemModal
-            onClose={closeAddModal}
+            onClose={closeAddModal }
             onNameChange={handleChange}
             onAddItem={handleAddItem}
           />

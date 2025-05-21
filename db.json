@@ -41,12 +41,6 @@
       "name": "T-Shirt",
       "weather": "hot",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
-    },
-    {
-      "name": "blue dress",
-      "imageUrl": "https://media.istockphoto.com/id/934408078/photo/navy-blue-retro-dress-with-short-sleeves-isolated-on-white.jpg?s=1024x1024&w=is&k=20&c=0SBxR-KHbIik1rQfVtXE1JQKKRXZ2n5Km2al5TuFtjU=",
-      "weather": "warm",
-      "_id": 1747705414172
     }
   ]
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AddItemModal from "./AddItemModal.jsx";
+import SignUpModal from "./SignUpModal.jsx"
 import Header from "./Header";
 import "../blocks/Header.css";
 import "../blocks/App.css";
@@ -30,6 +31,7 @@ import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitCon
 function App() {
   // === Modal States ===
   const [isAddModalOpen, setAddModalOpen] = useState(false);
+  const [isSignUpModalOpen,setSignUpModalOpen]=useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -208,6 +210,7 @@ function App() {
           <Header
             date={currentDate}
             setAddModalOpen={setAddModalOpen}
+            setSignUpModalOpen={setSignUpModalOpen}
             weatherData={weatherData}
           />
           <main>
@@ -251,6 +254,13 @@ function App() {
             onClose={closeAddModal }
             onNameChange={handleChange}
             onAddItem={handleAddItem}
+          />
+        )}
+        {isSignUpModalOpen &&(
+          <SignUpModal
+          onClose={closeAddModal}
+          OnNameChange={handleChange}
+          onAddItem={handleAddItem}
           />
         )}
 

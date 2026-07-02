@@ -24,6 +24,12 @@ function Header(props) {
         >
           + Add clothes
         </button>
+        <button
+        className="header__add-clothes-bttn"
+        onClick={props.setSignUpModalOpen}
+        >
+          Sign Up
+        </button>
         <Link to="/profile" className="no-underline">
           <p className="header__username">Terrence Tegene</p>
         </Link>
